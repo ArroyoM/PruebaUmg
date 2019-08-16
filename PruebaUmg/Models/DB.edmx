@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TestUmgModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TestUmgModelStoreContainer">
+    <EntitySet Name="alumno" EntityType="TestUmgModel.Store.alumno" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Curso" EntityType="TestUmgModel.Store.Curso" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="docente" EntityType="TestUmgModel.Store.docente" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="alumno_cursos" EntityType="TestUmgModel.Store.alumno_cursos" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="Cursoalumno_curso" Association="TestUmgModel.Store.Cursoalumno_curso">
+      <End Role="Curso" EntitySet="Curso" />
+      <End Role="alumno_curso" EntitySet="alumno_cursos" />
+    </AssociationSet>
+    <AssociationSet Name="alumnoalumno_curso" Association="TestUmgModel.Store.alumnoalumno_curso">
+      <End Role="alumno" EntitySet="alumno" />
+      <End Role="alumno_curso" EntitySet="alumno_cursos" />
+    </AssociationSet>
+    <AssociationSet Name="docenteCurso" Association="TestUmgModel.Store.docenteCurso">
+      <End Role="docente" EntitySet="docente" />
+      <End Role="Curso" EntitySet="Curso" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="alumno">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="apellido" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="edad" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Curso">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="docente_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="docente">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="apellido" Type="nvarchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="alumno_cursos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Curso_id" Type="int" Nullable="false" />
+    <Property Name="alumno_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="Cursoalumno_curso">
+    <End Role="Curso" Type="TestUmgModel.Store.Curso" Multiplicity="1" />
+    <End Role="alumno_curso" Type="TestUmgModel.Store.alumno_cursos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Curso">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="alumno_curso">
+        <PropertyRef Name="Curso_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="alumnoalumno_curso">
+    <End Role="alumno" Type="TestUmgModel.Store.alumno" Multiplicity="1" />
+    <End Role="alumno_curso" Type="TestUmgModel.Store.alumno_cursos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="alumno">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="alumno_curso">
+        <PropertyRef Name="alumno_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="docenteCurso">
+    <End Role="docente" Type="TestUmgModel.Store.docente" Multiplicity="1" />
+    <End Role="Curso" Type="TestUmgModel.Store.Curso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="docente">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Curso">
+        <PropertyRef Name="docente_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestUmgModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TestUmgEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="alumno" EntityType="TestUmgModel.alumno" />
+          <EntitySet Name="Curso" EntityType="TestUmgModel.Curso" />
+          <EntitySet Name="docente" EntityType="TestUmgModel.docente" />
+          <EntitySet Name="alumno_cursos" EntityType="TestUmgModel.alumno_curso" />
+          <AssociationSet Name="Cursoalumno_curso" Association="TestUmgModel.Cursoalumno_curso">
+            <End Role="Curso" EntitySet="Curso" />
+            <End Role="alumno_curso" EntitySet="alumno_cursos" />
+          </AssociationSet>
+          <AssociationSet Name="alumnoalumno_curso" Association="TestUmgModel.alumnoalumno_curso">
+            <End Role="alumno" EntitySet="alumno" />
+            <End Role="alumno_curso" EntitySet="alumno_cursos" />
+          </AssociationSet>
+          <AssociationSet Name="docenteCurso" Association="TestUmgModel.docenteCurso">
+            <End Role="docente" EntitySet="docente" />
+            <End Role="Curso" EntitySet="Curso" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="alumno">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="edad" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="alumno_curso" Relationship="TestUmgModel.alumnoalumno_curso" FromRole="alumno" ToRole="alumno_curso" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="alumno_curso" Relationship="TestUmgModel.Cursoalumno_curso" FromRole="Curso" ToRole="alumno_curso" />
+          <NavigationProperty Name="docente" Relationship="TestUmgModel.docenteCurso" FromRole="Curso" ToRole="docente" />
+          <Property Name="docente_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="docente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Curso" Relationship="TestUmgModel.docenteCurso" FromRole="docente" ToRole="Curso" />
+        </EntityType>
+        <EntityType Name="alumno_curso">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Curso" Relationship="TestUmgModel.Cursoalumno_curso" FromRole="alumno_curso" ToRole="Curso" />
+          <Property Name="Curso_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="alumno" Relationship="TestUmgModel.alumnoalumno_curso" FromRole="alumno_curso" ToRole="alumno" />
+          <Property Name="alumno_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="Cursoalumno_curso">
+          <End Type="TestUmgModel.Curso" Role="Curso" Multiplicity="1" />
+          <End Type="TestUmgModel.alumno_curso" Role="alumno_curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curso">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="alumno_curso">
+              <PropertyRef Name="Curso_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="alumnoalumno_curso">
+          <End Type="TestUmgModel.alumno" Role="alumno" Multiplicity="1" />
+          <End Type="TestUmgModel.alumno_curso" Role="alumno_curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumno">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="alumno_curso">
+              <PropertyRef Name="alumno_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="docenteCurso">
+          <End Type="TestUmgModel.docente" Role="docente" Multiplicity="1" />
+          <End Type="TestUmgModel.Curso" Role="Curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="docente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Curso">
+              <PropertyRef Name="docente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TestUmgModelStoreContainer" CdmEntityContainer="TestUmgEntities">
+    <EntitySetMapping Name="alumno">
+      <EntityTypeMapping TypeName="IsTypeOf(TestUmgModel.alumno)">
+        <MappingFragment StoreEntitySet="alumno">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="edad" ColumnName="edad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Curso">
+      <EntityTypeMapping TypeName="IsTypeOf(TestUmgModel.Curso)">
+        <MappingFragment StoreEntitySet="Curso">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="docente_id" ColumnName="docente_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="docente">
+      <EntityTypeMapping TypeName="IsTypeOf(TestUmgModel.docente)">
+        <MappingFragment StoreEntitySet="docente">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="alumno_cursos">
+      <EntityTypeMapping TypeName="IsTypeOf(TestUmgModel.alumno_curso)">
+        <MappingFragment StoreEntitySet="alumno_cursos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Curso_id" ColumnName="Curso_id" />
+          <ScalarProperty Name="alumno_id" ColumnName="alumno_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
