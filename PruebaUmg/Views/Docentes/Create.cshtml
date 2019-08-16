@@ -43,7 +43,7 @@
 <script>
     function djDelete() {
         if (confirm("esta seguro que desea eliminarlo?")){
-                        var url = "@Url.Content("~/user/delete")" + "/" + id;
+               var url = "@Url.Content("~/user/delete")" + "/" + id;
         $.post(url, (data) => {
             if (data == "1") {
                 document.location.href = "@Url.Content("~/user")"
